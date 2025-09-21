@@ -45,7 +45,7 @@ fun strCalculate(x0: String, x1: String): Int {
 
         if (c0 == 'T' || c0 == 'C') {
             if (c0 != c1) {
-                result += if (i < half) 1 else 2
+                result += if (i < half) 2 else 1
             }
         }
     }
