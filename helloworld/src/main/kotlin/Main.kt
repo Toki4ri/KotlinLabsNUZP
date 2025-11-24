@@ -5,8 +5,19 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import java.net.URL
 import kotlin.math.abs
-import kotlin.math.max
 import kotlin.math.sqrt
+
+// Функція seed()
+fun seed(): List<String> {
+    return listOf(
+        "user0",
+        "user1",
+        "user2",
+        "user3",
+        "user4",
+        "user5"
+    )
+}
 
 // Отримання одного числа з сервера
 suspend fun getNumberFromServer(msg: String): Int =
@@ -23,7 +34,7 @@ suspend fun getNumberFromServer(msg: String): Int =
         String(buffer, 0, bytesRead).toInt()
     }
 
-// Основна функція лабораторної
+// Основна функція лабораторної serverDataCalculate()
 suspend fun serverDataCalculate(strList: List<String>): Double = coroutineScope {
 
     // Створюємо список корутин, які паралельно отримують дані
@@ -35,7 +46,7 @@ suspend fun serverDataCalculate(strList: List<String>): Double = coroutineScope 
     val values = deferredValues.awaitAll()
 
     // Шукаємо максимум серед модулів
-    val maxAbs = values.map { abs(it) }.max()
+    val maxAbs = values.maxOf { abs(it) }
 
     // Формула: sqrt(max(|x_i|))
     sqrt(maxAbs.toDouble())
