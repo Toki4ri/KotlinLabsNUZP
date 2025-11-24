@@ -1,53 +1,42 @@
-import com.diacht.ktest.compose.startTestUi
-import org.example.helloworld.BuildConfig
-import kotlin.math.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
+import java.net.URL
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.sqrt
 
-fun seed(): String = "Toki4ri"
+// Отримання одного числа з сервера
+suspend fun getNumberFromServer(msg: String): Int =
+    withContext(Dispatchers.IO) {
+        val url = URL("http://diacht.2vsoft.com/api/send-number?message=$msg")
+        val connection = url.openConnection()
+        connection.connect()
 
-fun labNumber() : Int = BuildConfig.LAB_NUMBER
+        val input = connection.getInputStream()
+        val buffer = ByteArray(128)
+        val bytesRead = input.read(buffer)
+        input.close()
 
-fun main(args: Array<String>) {
-    println("Лабораторна робота №${labNumber()} користувача ${seed()}")
-    startTestUi(seed(), labNumber())
-}
-
-/*Завдання 1. iCalculate() = sqrt(x0^2 + x1^2 + x2^2 + x3^2)*/
-fun iCalculate(
-    x0: Int = -88,
-    x1: Int = -91,
-    x2: Int = -127,
-    x3: Int = 40
-): Double {
-    return sqrt((x0 * x0 + x1 * x1 + x2 * x2 + x3 * x3).toDouble())
-}
-
-/*Завдання 2. dCalculate() = кубічний корінь з (|x0| + |x1| + |x2| + |x3| + |x4|)*/
-fun dCalculate(
-    x0: Double = -70.84,
-    x1: Double = -65.72,
-    x2: Double = -134.56,
-    x3: Double = -1.74,
-    x4: Double = 5.32
-): Double {
-    val sum = abs(x0) + abs(x1) + abs(x2) + abs(x3) + abs(x4)
-    return sum.pow(1.0 / 3.0)   // кубічний корінь
-}
-
-/*Завдання 3. strCalculate() рахує кількість неспівпадінь між x0 та x1
-*тільки для символів T і C у x0.*/
-fun strCalculate(x0: String, x1: String): Int {
-    var result = 0
-    val half = x0.length / 2
-
-    for (i in x0.indices) {
-        val c0 = x0[i]
-        val c1 = x1[i]
-
-        if (c0 == 'T' || c0 == 'C') {
-            if (c0 != c1) {
-                result += if (i < half) 2 else 1
-            }
-        }
+        String(buffer, 0, bytesRead).toInt()
     }
-    return result
+
+// Основна функція лабораторної
+suspend fun serverDataCalculate(strList: List<String>): Double = coroutineScope {
+
+    // Створюємо список корутин, які паралельно отримують дані
+    val deferredValues = strList.map { message ->
+        async { getNumberFromServer(message) }
+    }
+
+    // Чекаємо всі відповіді від сервера
+    val values = deferredValues.awaitAll()
+
+    // Шукаємо максимум серед модулів
+    val maxAbs = values.map { abs(it) }.max()
+
+    // Формула: sqrt(max(|x_i|))
+    sqrt(maxAbs.toDouble())
 }
