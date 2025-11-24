@@ -18,6 +18,7 @@ fun seed(): List<String> {
         "user5"
     )
 }
+fun seed(index: Int): String = seed()[index]
 
 // Отримання одного числа з сервера
 suspend fun getNumberFromServer(msg: String): Int =
