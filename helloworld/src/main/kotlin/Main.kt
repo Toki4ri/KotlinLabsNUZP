@@ -8,17 +8,7 @@ import kotlin.math.abs
 import kotlin.math.sqrt
 
 // Функція seed()
-fun seed(): List<String> {
-    return listOf(
-        "user0",
-        "user1",
-        "user2",
-        "user3",
-        "user4",
-        "user5"
-    )
-}
-fun seed(index: Int): String = seed()[index]
+fun seed(): String = "Toki4ri"
 
 // Отримання одного числа з сервера
 suspend fun getNumberFromServer(msg: String): Int =
