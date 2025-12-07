@@ -29,6 +29,12 @@ open class Machine(private val storage: Storage) {
 //        }
     }
 
+    open fun makeDrink(receipt: Receipt): Product {
+        setReceipt(receipt)               // встановлюємо рецепт
+        consumeProducts(receipt.products) // завантажуємо продукти
+        return executeProcess()           // повертаємо готовий продукт
+    }
+
     /**
      * Створити вихідний продукт.
      */

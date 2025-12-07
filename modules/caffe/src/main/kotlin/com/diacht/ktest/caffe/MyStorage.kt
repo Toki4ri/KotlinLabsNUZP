@@ -1,3 +1,5 @@
+package com.diacht.ktest.caffe
+
 import com.diacht.ktest.Product
 import com.diacht.ktest.ProductType
 import com.diacht.ktest.Storage
@@ -12,22 +14,25 @@ class MyStorage : Storage {
     }
 
     override fun checkProductCount(type: ProductType): Int {
-        return products[type] ?: 0
+        return products.getOrDefault(type, 0)
     }
 
     override fun getProduct(productType: ProductType, count: Int): Product {
-        val current = products.getOrDefault(productType, 0)
+        val currentCount = products.getOrDefault(productType, 0)
 
-        if (current < count)
-            throw IllegalStateException("Not enough $productType in storage")
+        if (currentCount < count) {
+            throw IllegalStateException("Not enough product: $productType. Required: $count, Available: $currentCount")
+        }
+        products[productType] = currentCount - count
 
-        products[productType] = current - count
-
-        return Product(productType, count)
+        return Product(type = productType, count = count)
     }
 
     override fun getLeftovers(): List<Product> {
-        return products.map { Product(it.key, it.value) }
+        return products.map { (type, count) ->
+            Product(type = type, count = count)
+        }
+
     }
 
     override fun resetSimulation() {

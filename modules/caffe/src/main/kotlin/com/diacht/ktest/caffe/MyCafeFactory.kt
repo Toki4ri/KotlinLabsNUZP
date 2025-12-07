@@ -1,16 +1,18 @@
-import com.diacht.ktest.*
+package com.diacht.ktest.caffe
 
+import com.diacht.ktest.FactoryItf
+import com.diacht.ktest.Product
+import com.diacht.ktest.ProductType
 
 class MyCafeFactory : FactoryItf() {
 
     private val storage = MyStorage()
-    private val machine = MyCafeMachine(storage)
+    private val machine = CaffePress(storage)
 
     private val orderHistory = mutableListOf<ProductType>()
 
     override fun resetSimulation() {
         storage.resetSimulation()
-        machine.resetSimulation()
         orderHistory.clear()
     }
 
@@ -27,7 +29,7 @@ class MyCafeFactory : FactoryItf() {
             repeat(count) {
                 orderHistory += drinkType
 
-                val receipt = Receipts.list.firstOrNull { it.outProductType == drinkType }
+                val receipt = CaffeReceipts.getReceipt(drinkType)
                     ?: throw IllegalStateException("Unknown drink: $drinkType")
 
                 result += machine.makeDrink(receipt)
@@ -46,10 +48,9 @@ class MyCafeFactory : FactoryItf() {
     // -------------------------
     override fun getPopularDrink(): Product {
         if (orderHistory.isEmpty())
-            return Product(ProductType.NONE, 0)
+            return Product(NONE, 0)
 
         val grouped = orderHistory.groupingBy { it }.eachCount()
-
         val max = grouped.maxBy { it.value }
 
         return Product(max.key, max.value)
