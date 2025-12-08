@@ -48,7 +48,7 @@ class MyCafeFactory : FactoryItf() {
     // -------------------------
     override fun getPopularDrink(): Product {
         if (orderHistory.isEmpty())
-            return Product(NONE, 0)
+            return Product(com.diacht.ktest.NONE, 0)
 
         val grouped = orderHistory.groupingBy { it }.eachCount()
         val max = grouped.maxBy { it.value }

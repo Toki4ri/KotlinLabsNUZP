@@ -8,7 +8,8 @@ import com.diacht.ktest.Storage
 class CaffePress(storage: Storage) : Machine(storage) {
 
     override fun makeDrink(receipt: Receipt): Product {
-        // Використовуємо реалізацію Machine (спільну логіку)
-        return super.makeDrink(receipt)
+        setReceipt(receipt)
+        consumeProducts(receipt.products)
+        return executeProcess()
     }
 }
