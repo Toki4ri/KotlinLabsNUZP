@@ -22,8 +22,8 @@ open class Machine(private val storage: Storage) {
     /**
      * Завантажити потрібні для рецепта продукти.
      */
-    fun consumeProducts(products: List<Product>) = products.forEach {
-        storage.addProduct(it)
+    fun consumeProducts(products: List<Product>) =
+        products.forEach { storage.getProduct(it.type, it.count)
 //        if (storage.checkProductCount(it.type) > MAX_PROCESS_PRODUCT) {
 //            throw IllegalStateException("Process overloaded with ${it.type} count > $MAX_PROCESS_PRODUCT")
 //        }
