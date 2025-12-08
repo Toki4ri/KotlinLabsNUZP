@@ -65,7 +65,7 @@ object CaffeReceipts {
 
     val CacaoReceipt = Receipt(
         products = listOf(
-            Product(type = CACAO_POWDER, 12),
+            Product(type = CACAO_POWDER, 13),
             Product(type = MILK, 180),
             Product(type = WATER, 30),
             Product(type = SUGAR, 25)
