@@ -47,7 +47,7 @@ object CaffeReceipts {
         ),
         time = 8,
         timeUnit = TimeUnit.SECONDS,
-        outProductType = AMERICANO_WITH_MILK,
+        outProductType = AMERICANO_WI_MILK,
         price = 35
     )
 
@@ -81,7 +81,7 @@ object CaffeReceipts {
             ESPRESSO -> EspressoReceipt
             AMERICANO -> AmericanoReceipt
             CAPPUCCINO -> CappuccinoReceipt
-            AMERICANO_WITH_MILK -> AmericanoMilkReceipt
+            AMERICANO_WI_MILK -> AmericanoMilkReceipt
             LATE -> LateReceipt
             CACAO_DRINK -> CacaoReceipt
             else -> null
