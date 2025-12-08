@@ -18,6 +18,7 @@ object CaffeReceipts {
     val AmericanoReceipt = Receipt(
         products = listOf(
             Product(type = COFFEE, 7),
+            Product(type = SUGAR, 7),
             Product(type = WATER, 120)
         ),
         time = 6,
@@ -28,8 +29,9 @@ object CaffeReceipts {
 
     val CappuccinoReceipt = Receipt(
         products = listOf(
-            Product(type = COFFEE, 9),
             Product(type = MILK, 50),
+            Product(type = COFFEE, 9),
+            Product(type = SUGAR, 7),
             Product(type = WATER, 110)
         ),
         time = 10,
@@ -40,9 +42,9 @@ object CaffeReceipts {
 
     val AmericanoMilkReceipt = Receipt(
         products = listOf(
-            Product(type = COFFEE, 7),
             Product(type = MILK, 30),
-            Product(type = SUGAR, 7),
+            Product(type = COFFEE, 7),
+            Product(type = SUGAR, 14),
             Product(type = WATER, 90)
         ),
         time = 8,
@@ -53,8 +55,9 @@ object CaffeReceipts {
 
     val LateReceipt = Receipt(
         products = listOf(
-            Product(type = COFFEE, 10),
             Product(type = MILK, 150),
+            Product(type = COFFEE, 10),
+            Product(type = SUGAR, 14),
             Product(type = WATER, 50)
         ),
         time = 10,
@@ -65,10 +68,10 @@ object CaffeReceipts {
 
     val CacaoReceipt = Receipt(
         products = listOf(
-            Product(type = CACAO_POWDER, 13),
             Product(type = MILK, 180),
+            Product(type = SUGAR, 25),
             Product(type = WATER, 30),
-            Product(type = SUGAR, 25)
+            Product(type = CACAO_POWDER, 13)
         ),
         time = 9,
         timeUnit = TimeUnit.SECONDS,

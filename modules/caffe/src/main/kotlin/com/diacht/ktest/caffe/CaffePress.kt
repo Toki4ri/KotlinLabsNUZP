@@ -9,7 +9,7 @@ class CaffePress(storage: Storage) : Machine(storage) {
 
     override fun makeDrink(receipt: Receipt): Product {
         setReceipt(receipt)
-        consumeProducts(receipt.products)
+
         return executeProcess()
     }
 }

@@ -22,18 +22,13 @@ open class Machine(private val storage: Storage) {
     /**
      * Завантажити потрібні для рецепта продукти.
      */
-    fun consumeProducts(products: List<Product>) =
-        products.forEach { storage.getProduct(it.type, it.count)
-//        if (storage.checkProductCount(it.type) > MAX_PROCESS_PRODUCT) {
-//            throw IllegalStateException("Process overloaded with ${it.type} count > $MAX_PROCESS_PRODUCT")
-//        }
-    }
+
 
     open fun makeDrink(receipt: Receipt): Product {
-        setReceipt(receipt)               // встановлюємо рецепт
-        consumeProducts(receipt.products) // завантажуємо продукти
-        return executeProcess()           // повертаємо готовий продукт
+        setReceipt(receipt)
+        return executeProcess()
     }
+
 
     /**
      * Створити вихідний продукт.
@@ -41,10 +36,10 @@ open class Machine(private val storage: Storage) {
     fun executeProcess() : Product {
         val receipt = currentReciept ?: throw IllegalStateException("Receipt isn't set")
         receipt.products.forEach {
-            storage.getProduct(it.type, it.count)
+            storage.getProduct(it.type, it.count)   // ✔ списання
         }
-//      receipt.timeUnit.sleep(receipt.time)
         TimeUnit.MILLISECONDS.sleep(receipt.time)
         return Product(receipt.outProductType, 1)
     }
+
 }
