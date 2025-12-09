@@ -6,8 +6,6 @@ object MILK : ProductType()
 object COFFEE : ProductType()
 object CACAO_POWDER : ProductType()
 
-object NONE : ProductType()
-
 object ESPRESSO : ProductType()
 object AMERICANO : ProductType()
 object CAPPUCCINO : ProductType()

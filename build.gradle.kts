@@ -1,33 +1,28 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version Versions.kotlin
     id("com.github.gmazzo.buildconfig") version "3.1.0"
     application
 }
-
 subprojects {
     apply(plugin = "com.github.gmazzo.buildconfig")
 }
 
-val labNumber = 3
+val labNumber = 4
 
 allprojects {
     buildConfig {
         buildConfigField("int", "LAB_NUMBER", "${labNumber}")
     }
 }
-
 group = "org.example"
 version = "1.0-SNAPSHOT"
-
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     maven("file://${rootDir}/.m2repo/")
     google()
 }
-
 dependencies {
     if (labNumber > 1) {
         implementation(project(":helloworld"))
@@ -37,14 +32,12 @@ dependencies {
     implementation(Versions.library)
     testImplementation(kotlin("test"))
 }
-
 sourceSets {
     if (labNumber < 2) {
         named("main") {
             java.srcDir("./helloworld/src/main/kotlin/")
         }
     }
-
     test {
         kotlin {
             srcDir(
@@ -60,22 +53,17 @@ sourceSets {
         }
         compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
         runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
-
     }
 }
-
 tasks.test {
     useJUnitPlatform()
 }
-
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
-
 application {
     mainClass.set("MainKt")
 }
-
 tasks.withType<Test> {
     testLogging {
         showCauses = true
@@ -87,7 +75,6 @@ tasks.withType<Test> {
         events.add(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED)
     }
 }
-
 kotlin {
     jvmToolchain(Versions.jvmLevel)
 }
